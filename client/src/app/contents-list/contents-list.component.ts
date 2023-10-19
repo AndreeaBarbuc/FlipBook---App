@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Content } from '../content';
-import { ContentService } from '../content.service';
- 
+import { Content } from '../database/content';
+import { ContentService } from '../database/content.service';
+
 @Component({
- selector: 'app-contents-list',
- template: `
+  selector: 'app-contents-list',
+  template: `
  <ul class="nav">
   <li class="nav-item">
     <a class="nav-link" href='users'>Users</a>
@@ -20,20 +20,13 @@ import { ContentService } from '../content.service';
        <thead>
            <tr>
                <th>Title</th>
-               <th>Description</th>
-               <th>Image</th>
                <th>Action</th>
            </tr>
        </thead>
  
        <tbody>
            <tr *ngFor="let content of contents$ | async">
-               <td>{{content.title}}</td>
-               <td>{{content.description}}</td>
-               <td>
-               <img [src]="content.img"/>
-                {{content.img}}
-               </td>
+               <td>{{content.text}}</td>
                <td>
                    <button class="btn btn-primary me-1" [routerLink]="['edit/', content._id]">Edit</button>
                    <button class="btn btn-danger" (click)="deleteContent(content._id || '')">Delete</button>
@@ -48,21 +41,21 @@ import { ContentService } from '../content.service';
 
 export class ContentsListComponent implements OnInit {
 
- contents$: Observable<Content[]> = new Observable();
- 
- constructor(private contentsService: ContentService) { }
- 
- ngOnInit(): void {
-   this.fetchContents();
- }
- 
- deleteContent(id: string): void {
-   this.contentsService.deleteContent(id).subscribe({
-     next: () => this.fetchContents()
-   });
- }
- 
- private fetchContents(): void {
-   this.contents$ = this.contentsService.getContents();
- }
+  contents$: Observable<Content[]> = new Observable();
+
+  constructor(private contentsService: ContentService) { }
+
+  ngOnInit(): void {
+    this.fetchContents();
+  }
+
+  deleteContent(id: string): void {
+    this.contentsService.deleteContent(id).subscribe({
+      next: () => this.fetchContents()
+    });
+  }
+
+  private fetchContents(): void {
+    this.contents$ = this.contentsService.getContents();
+  }
 }

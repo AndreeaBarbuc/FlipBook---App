@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="left">
+        <h4>Titlu</h4>
+
+        <div class="left-container-1">
+            {{texts[1]}}
+        </div>
+
+        <div class="left-container-2">
+            <img [src]="images[1]" alt="Imagine" />
+            <!-- <img src="./assets/images/fash2.jpg" alt="Imagine 1"> -->
+        </div>
+
+        <div class="left-container-3">
+            <img [src]="images[2]" alt="Imagine" />
+            <!-- <img src="./assets/images/fash3.jpg" alt="Imagine 2"> -->
+        </div>
+    </div>
+
+    <div class="right">
+        <img [src]="images[3]" alt="Imagine" />
+
+        <div class="right-container-1">
+            <ng-container *ngIf="showAddContent; else contentList">
+                <app-gallery-details></app-gallery-details>
+            </ng-container>
+            <ng-template #contentList>
+                <app-gallery></app-gallery>
+            </ng-template>
+        </div>
+
+        <div class="right-container-2">
+            <p>
+                {{texts[2]}}
+            </p>
+        </div>
+
+        <div class="right-container-3">
+            {{texts[4]}}
+        </div>
+    </div>
+</div>

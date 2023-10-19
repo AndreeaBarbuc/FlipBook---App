@@ -1,0 +1,16 @@
+
+<!-- this code represent the showing component of the image switched with the video logic -->
+
+<div>
+    <div *ngIf="showImage" (click)="toggleVideo()">
+        <img src="assets/images/fash1.jpg" alt="Image" />
+      </div>
+      <div *ngIf="!showImage">
+        <video controls (ended)="toggleImage()">
+          <source src="assets/video/spring1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+</div>
+
+  

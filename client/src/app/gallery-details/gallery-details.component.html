@@ -1,0 +1,55 @@
+<!-- This HTML code controls the display of content based on the value of the 'showAddContent' variable.
+   If 'showAddContent' is true, it displays a link to navigate back to the gallery, the gallery image, 
+   and its description using a Material card. If 'showAddContent' is false, 
+   it displays the 'app-gallery' component, presumably showing a different view or gallery. -->
+   
+
+<ng-container *ngIf="showAddContent; else contentList">
+  <!-- This part of the code will be displayed when 'showAddContent' is true -->
+  
+  <!-- A link to navigate back to the '/gallery' route -->
+  <a [routerLink]="['/gallery']">
+    <h3>Upload again!</h3>
+  </a>
+  <!--
+  The 'routerLink' attribute sets up a link to the '/gallery' route.
+  When clicked, it allows the user to navigate back to the gallery page.
+  -->
+  
+  <!-- An alternative way to hide the "Upload again!" link -->
+  <!-- <a (click)="showAddContent = false"><h3>Upload again!</h3></a> -->
+  <!--
+  The commented line would hide the link and set 'showAddContent' to false when clicked.
+  It provides an alternative user interaction to return to the gallery.
+  -->
+
+  <!-- A material card displaying gallery image and description -->
+  <mat-card class="example-card">
+    <!-- Display the image with a URL from 'gallery.imageUrl' -->
+    <img mat-card-image src="{{gallery.imageUrl}}" alt="Photo Unavailable">
+    <!--
+    The 'mat-card-image' tag displays the gallery image with the source ('src') from 'gallery.imageUrl'.
+    If the image is unavailable, it displays "Photo Unavailable" as the alternative text.
+    -->
+
+    <mat-card-content>
+      <!-- Display the gallery image description -->
+      <p>{{gallery.imageDesc}}</p>
+    </mat-card-content>
+    <!--
+    The 'mat-card-content' section contains the gallery image description retrieved from 'gallery.imageDesc'.
+    It displays a paragraph with the description.
+    -->
+  </mat-card>
+</ng-container>
+
+<ng-template #contentList>
+  <!-- This part of the code will be displayed when 'showAddContent' is false -->
+  
+  <!-- Include the 'app-gallery' component -->
+  <app-gallery></app-gallery>
+  <!--
+  When 'showAddContent' is false, this template includes the 'app-gallery' component.
+  This component likely displays a different view, such as a gallery of images.
+  -->
+</ng-template>

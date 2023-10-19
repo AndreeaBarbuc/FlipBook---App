@@ -1,0 +1,162 @@
+<!-- This HTML structure represents a flipbook-like web page with multiple pages, 
+  some of which contain text, images, videos, and some Angular components  -->
+
+<html>
+
+<head>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Include jQuery and Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+  </script>
+
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="aspect">
+      <div class="aspect-inner">
+        <div class="flipbook" id="flipbook">
+
+          <!-- Page 1 - Cover Front -->
+          <div class="page cover-front">
+            <h2>Nardos Spring 2024</h2>
+          </div>
+
+          <!-- Page 2 - Display text -->
+          <div class="page mid-left-page">
+            <div class="container">
+              <p>Fashion is a term used interchangeably to describe the creation of clothing, footwear, accessories,
+                cosmetics, and jewellery of different cultural aesthetics and their mix and match into outfits that
+                depict distinctive ways of dressing (styles and trends) as signifiers of social status, self-expression,
+                and group belonging. As a multifaceted term, fashion describes an industry, styles, aesthetics, and
+                trends.<br>
+                The term 'fashion' originates from the Latin word 'Facere,' which means 'to make,' and describes the
+                manufacturing, mixing, and wearing of outfits adorned with specific cultural aesthetics, patterns,
+                motifs, shapes, and cuts, allowing people to showcase their group belonging, values, beliefs, and ways
+                of life.<br>
+                Given the rise in mass production of commodities and clothing at lower prices and global reach, reducing
+                fashion's environmental impact and improving sustainability has become an urgent issue among
+                politicians, brands, and consumers.</p>
+            </div>
+          </div>
+
+          <!-- Page 3 - Angular conditionally displays an image or video -->
+          <div class="page mid-right-page">
+            <div class="container">              
+              <div *ngIf="showImage" (click)="toggleVideo()" class="image-container">
+                <p>Press image</p>
+                <img src="assets/images/fash1.jpg" alt="Image" />
+              </div>
+              <div *ngIf="!showImage">
+                <video controls (ended)="toggleImage()">
+                  <source src="assets/video/spring1.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <div class="button_video" (click)="closeVideo()">x</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Page 4 - Show image -->
+          <div class="page mid-left-page">
+            <div class="container">
+              <img src="./assets/images/fash2.jpg" draggable="false" alt="fashion" />
+            </div>
+          </div>
+
+          <!-- Page 5 - Show Form -->
+          <div class="page mid-right-page">
+            <div class="container">
+              <form>
+                <h3>Contact Us</h3>
+                <br>
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                  <label for="message">Message:</label>
+                  <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                  <button type="submit">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Page 6 - Show Angular component where client can upload texts and images
+          in a static way and also to upload image in a dynamic way
+        P.S. WORK IN PROGRESS -> IT IS USED THE ROUTER HERE -->
+          <div class="page mid-left-page">
+            <app-page2></app-page2>
+          </div>
+
+          <!-- Page 7 - Show Angular component where client can upload texts and images
+          in a static way and also to upload image in a dynamic way
+        P.S. WORK IN PROGRESS -> IT IS USED COMPONENT NAVIGATION HERE
+                              ->  the view logic is correct, also the content is added with success
+                            in DB, but it's not appearing, problems with GET response/request -->
+          <div class="page mid-right-page">
+            <app-page11></app-page11>
+          </div>
+
+          <!-- Page 8 - Show Picture -->
+          <div class="page mid-left-page">
+            <div class="container">
+              <img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/06.jpg" draggable="false"
+                alt="" />
+            </div>
+          </div>
+
+          <!-- Page 9 - Blank page -->
+          <div class="page mid-right-page">
+            <div class="container"></div>
+          </div>
+
+          <!-- Page 10 - Show content text and add content text
+          P.S. Text content is sent and added with success in DB, but there are problems with
+        GET request/response and the text does not appear -->
+          <div class="page mid-left-page">
+            <div class="container">
+              <app-page5></app-page5>
+            </div>
+          </div>
+
+          <!-- Page 11 - Show picture -->
+          <div class="page mid-right-page">
+            <div class="container">
+              <img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/05.jpg" draggable="false"
+                alt="" />
+            </div>
+          </div>
+
+           <!-- Page 12 - Show Angular component where client can upload texts and images
+          in a static way -->
+          <div class="page mid-left-page">
+            <div class="container">
+              <app-page10></app-page10>
+            </div>
+          </div>
+
+          <!-- Page 13 - Blank page -->
+          <div class="page mid-right-page">
+            <div class="container"></div>
+          </div>
+
+          <!-- Page 14 - Cover back page -->
+          <div class="page cover-back mid-left-page"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

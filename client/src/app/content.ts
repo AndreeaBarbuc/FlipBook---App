@@ -1,6 +1,5 @@
-export interface Content {
-   title?: string,
-   description?: String,
-   img?:BinaryData,
+export class Content {
     _id?: string;
+    text?: string;
+    uploaded?: Date;
 }

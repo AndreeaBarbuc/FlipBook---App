@@ -1,84 +1,83 @@
+// This code defines an Angular component called ContentFormComponent, 
+// which is responsible for rendering a form for adding content (and also in the view case of editing). 
+// It features the ability to handle and emit form changes and submissions. 
+// The form contains a single input field for entering text content and a submit button, 
+// which is disabled when the form is invalid. The component also has a flag 
+// to control the visibility of the form and initializes the form with an initial content state.
+
+
+
+// Import necessary modules and components from Angular and other libraries
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { Content } from '../content';
- 
+
 @Component({
- selector: 'app-content-form',
- template: `
-   <form class="content-form" autocomplete="off" [formGroup]="contentForm" (ngSubmit)="submitForm()">
-     <div class="form-floating mb-3">
-       <input class="form-control" type="text" id="title" formControlName="title" placeholder="Title" required>
-       <label for="title">Title</label>
-     </div>
- 
-     <!-- <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
-       <div *ngIf="title.errors?.['required']">
-         Title is required.
-       </div>
-       <div *ngIf="title.errors?.['minlength']">
-         Title must be at least 3 characters long.
-       </div>
-     </div>
-  -->
-     <div class="form-floating mb-3">
-       <input class="form-control" type="text" id="description" formControlName="description" placeholder="Description" required>
-       <label for="description">Description</label>
-     </div>
+  selector: 'app-content-form',
+  template: `
+    <!-- Display the content form if showAddContent is true, otherwise display a different component -->
+    <ng-container *ngIf="showAddContent; else contentList">
+      <app-page5></app-page5>
+    </ng-container>
 
-     <div class="form-floating">
-     <!-- <div>
-          <label for="image">Upload Image</label>
-          <input type="file" id="image" name="image" value="" required />
-        </div> -->
-       <input class="form-control" type="file" id="image" formControlName="image" placeholder="Image" required>
-       <label for="image">Image</label>
-     </div>
- 
-     <button class="btn btn-primary" type="submit" [disabled]="contentForm.invalid">Add</button>
-   </form>
- `,
- styles: [
-   `.content-form {
-     max-width: 560px;
-     margin-left: auto;
-     margin-right: auto;
-   }`
- ]
+    <!-- Define the content form using a template if showAddContent is false -->
+    <ng-template #contentList>
+      <form class="content-form" autocomplete="off" [formGroup]="contentForm" (ngSubmit)="submitForm()">
+        <!-- Create a form input field for entering text content -->
+        <div class="form-floating mb-3">
+          <label for="text">Text content</label>
+          <input class="form-control" type="text" id="text" formControlName="text" placeholder="Text" required>
+        </div>
+
+        <!-- Add a submit button that is disabled if the form is invalid -->
+        <button class="btn btn-primary" type="submit" [disabled]="contentForm.invalid">Add</button>
+      </form>
+    </ng-template>
+  `,
+  styles: [
+    // Define styles for the content form
+    `.content-form {
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }`
+  ]
 })
-
-
 export class ContentFormComponent implements OnInit {
- @Input()
- initialState: BehaviorSubject<Content> = new BehaviorSubject({});
- 
- @Output()
- formValuesChanged = new EventEmitter<Content>();
- 
- @Output()
- formSubmitted = new EventEmitter<Content>();
- 
- contentForm: FormGroup = new FormGroup({});
- 
- constructor(private fb: FormBuilder) { }
- 
- get title() { return this.contentForm.get('title')!; }
- get description() { return this.contentForm.get('description')!; }
- get image() { return this.contentForm.get('image')!; }
- 
- ngOnInit() {
-   this.initialState.subscribe(content => {
-     this.contentForm = this.fb.group({
-       title: [ content.title],
-       description: [ content.description],
-       image: [content.img]
-     });
-   });
- 
-   this.contentForm.valueChanges.subscribe((val) => { this.formValuesChanged.emit(val); });
- }
- 
- submitForm() {
-   this.formSubmitted.emit(this.contentForm.value);
- }
+  showAddContent: boolean = false; // Flag to control the visibility of the content form
+
+  // Input property to receive an initial content state
+  @Input()
+  initialState: BehaviorSubject<Content> = new BehaviorSubject({});
+
+  // Output events to emit form changes and form submissions
+  @Output()
+  formValuesChanged = new EventEmitter<Content>();
+  @Output()
+  formSubmitted = new EventEmitter<Content>();
+
+  contentForm: FormGroup = new FormGroup({}); // Define an empty form group
+
+  constructor(private fb: FormBuilder) { }
+
+  // Create a getter for the text form control
+  get text() { return this.contentForm.get('text')!; }
+
+  ngOnInit() {
+    this.initialState.subscribe(content => {
+      // Initialize the form with the initial content state
+      this.contentForm = this.fb.group({
+        text: [content.text]
+      });
+    });
+
+    // Subscribe to form value changes and emit them through formValuesChanged
+    this.contentForm.valueChanges.subscribe((val) => { this.formValuesChanged.emit(val); });
+  }
+
+  submitForm() {
+    // Emit the form value when the form is submitted
+    this.formSubmitted.emit(this.contentForm.value);
+  }
 }

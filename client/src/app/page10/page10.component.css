@@ -1,0 +1,28 @@
+ .container {
+    display: flex; /* Use flexbox to divide the container into two parts */
+    align-items: center; /* Vertically align the elements in the center */
+    justify-content: space-between; /* Equal space between the two parts */
+    width: 80%; /* Main container width */
+    margin: 0 auto; /* Center the container on the page */
+    padding: 20px; /* Spacing for visual appearance */
+}
+
+/* Styling for the image on the left */
+.left img {
+    max-width: 100%; /* Ensure the image does not exceed the container's width */
+    height: auto; /* Maintain image proportions */
+}
+
+/* Styling for the text on the right */
+.right {
+    flex: 1; /* Expand the available space for text */
+    padding: 0 20px; /* Spacing for visual appearance */
+}
+
+/* Styling for the image beneath the text */
+.overlap img {
+    width: 85%; /* Fill the container width */
+    margin-top: -20px; /* Overlay the top-right corner of the first image over the top-left corner of the second image */
+}
+
+  

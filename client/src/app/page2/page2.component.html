@@ -1,0 +1,38 @@
+<!-- Angular template component where client can upload texts and images
+          in a static way and also to upload image in a dynamic way
+        P.S. WORK IN PROGRESS -> IT IS USED THE ROUTER HERE -->
+
+<div class="container">   
+    
+    <div class="left">
+        <h4>Titlu</h4>
+        <div class="left-container-1">
+            {{texts[1]}}
+        </div>
+  
+        <div class="left-container-2">
+            <img [src]="images[1]" alt="Imagine" /> 
+        </div>
+
+        <div class="left-container-3">            
+            <img [src]="images[2]" alt="Imagine" />        
+        </div>
+    </div>
+
+    <div class="right" >  
+        <img [src]="images[3]" alt="Imagine" />              
+        <div class="right-container-1">
+            <router-outlet></router-outlet>  
+        </div>
+
+        <div class="right-container-2">            
+            <p>
+                {{texts[2]}}
+            </p>
+        </div>
+
+        <div class="right-container-3">
+            {{texts[4]}}
+        </div>
+    </div>
+</div>

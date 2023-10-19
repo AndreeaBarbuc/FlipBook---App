@@ -1,0 +1,77 @@
+<!-- this template conditionally displays a form for adding gallery images when showAddContent is true. 
+  The form includes fields for selecting an image file and providing an image description. 
+  If content is still loading (isLoadingResults is true), a loading spinner is displayed. 
+  A "Cancel" button allows the user to hide the form. When showAddContent is false, 
+  the content is replaced with the app-gallery-details component. -->
+  
+
+<!-- ng-container with an ngIf directive to conditionally display content based on 'showAddContent' -->
+<ng-container *ngIf="showAddContent; else contentList">
+
+  <!-- Container with CSS styles and elevation -->
+  <div class="example-container mat-elevation-z8">
+    <h2>Add Gallery</h2>
+
+    <!-- Loading spinner to indicate that content is loading -->
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
+    <!-- Mat-card element for styling and organizing the form -->
+    <mat-card class="example-card">
+
+      <!-- Form element with the [formGroup] directive to link it to the 'galleryForm' FormGroup -->
+      <form [formGroup]="galleryForm" (ngSubmit)="onFormSubmit()">
+
+        <!-- Mat-form-field for the 'imageFile' form control, including an input to select an image -->
+        <mat-form-field class="example-full-width">
+          <mat-label>Gallery Image</mat-label>
+
+          <!-- ngx-mat-file-input used for selecting an image file and connected to 'imageFile' form control -->
+          <ngx-mat-file-input
+            formControlName="imageFile"
+            placeholder="Select Image"
+            valuePlaceholder="No image file selected"
+            [errorStateMatcher]="matcher">
+          </ngx-mat-file-input>
+
+          <!-- Mat-icon displayed as a folder icon as a suffix in the input -->
+          <mat-icon matSuffix>folder</mat-icon>
+
+          <!-- Error message displayed if the 'imageFile' form control is not valid -->
+          <mat-error>
+            <span *ngIf="galleryForm.get('imageFile')?.valid">Please select an image file</span>
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Mat-form-field for the 'imageDesc' form control, including an input for entering image description -->
+        <mat-form-field class="example-full-width">
+          <mat-label>Image Description</mat-label>
+
+          <!-- Input field for entering the image description, connected to 'imageDesc' form control -->
+          <input matInput placeholder="Image Description" formControlName="imageDesc" [errorStateMatcher]="matcher">
+
+          <!-- Error message displayed if the 'imageDesc' form control is not valid and has been touched -->
+          <mat-error>
+            <span *ngIf="galleryForm.get('imageDesc')?.valid && galleryForm.get('imageDesc')?.touched">
+              Please enter Image Description
+            </span>
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Button row for form submission -->
+        <div class="button-row">
+          <button type="submit" mat-flat-button color="primary"><mat-icon>upgrade</mat-icon></button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+
+  <!-- Cancel button to hide the form -->
+  <button class="btn btn-primary mt-3" (click)="showAddContent = false">Cancel</button>
+</ng-container>
+
+<!-- ng-template to be displayed when 'showAddContent' is false -->
+<ng-template #contentList>
+  <app-gallery-details></app-gallery-details>
+</ng-template>
